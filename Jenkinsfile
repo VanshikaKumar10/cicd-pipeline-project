@@ -29,7 +29,7 @@ pipeline {
               		  -v \$(pwd):/usr/src \
               		  sonarsource/sonar-scanner-cli:latest \
               		  -Dsonar.projectKey=todo-app \
-              		  -Dsonar.sources=./app
+              		  -Dsonar.sources=/usr/src/app
                	    """
                 }
             }
