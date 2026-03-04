@@ -22,11 +22,15 @@ pipeline {
             steps {
                 withSonarQubeEnv("sonarqube") {
                     sh """
-                        sonar-scanner \
-                          -Dsonar.projectKey=${SONAR_PROJECT} \
-                          -Dsonar.sources=./app \
-                          -Dsonar.host.url=http://sonarqube:9000
-                    """
+                        docker run --rm \
+           		  --network cicd-network \
+             		  -e SONAR_HOST_URL=http://sonarqube:9000 \
+              		  -e SONAR_TOKEN=YOUR_SONAR_TOKEN \
+              		  -v \$(pwd):/usr/src \
+              		  sonarsource/sonar-scanner-cli:latest \
+              		  -Dsonar.projectKey=todo-app \
+              		  -Dsonar.sources=/usr/src/app
+               	    """
                 }
             }
         }
