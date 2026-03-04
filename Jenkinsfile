@@ -13,7 +13,7 @@ pipeline {
         stage("Checkout") {
             steps {
                 git branch: "main",
-                    url: "https://github.com/vanshikak10/cicd-pipeline-project.git"
+                    url: "https://github.com/vanshikakumar10/cicd-pipeline-project.git"
                 echo "Code checked out successfully"
             }
         }
