@@ -25,7 +25,7 @@ pipeline {
                         docker run --rm \
            		  --network cicd-network \
              		  -e SONAR_HOST_URL=http://sonarqube:9000 \
-              		  -e SONAR_TOKEN=YOUR_SONAR_TOKEN \
+              		  -e SONAR_TOKEN=sqa_dcb805a92508376a4362cdbdee78060eea78f681 \
               		  -v \$(pwd):/usr/src \
               		  sonarsource/sonar-scanner-cli:latest \
               		  -Dsonar.projectKey=todo-app \
