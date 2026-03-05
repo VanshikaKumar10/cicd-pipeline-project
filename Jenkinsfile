@@ -3,9 +3,9 @@ pipeline {
 
     environment {
         DOCKERHUB_USER  = "vanshikak10"
-        IMAGE_NAME      = "${DOCKERHUB_USER}/my-cicd-app"
+        IMAGE_NAME      = "${DOCKERHUB_USER}/todo-app"
         IMAGE_TAG       = "${BUILD_NUMBER}"
-        SONAR_PROJECT   = "my-cicd-app"
+        SONAR_PROJECT   = "todo-app"
     }
 
     stages {
@@ -13,7 +13,7 @@ pipeline {
         stage("Checkout") {
             steps {
                 git branch: "main",
-                    url: "https://github.com/vanshikakumar10/cicd-pipeline-project.git"
+                    url: "https://github.com/vanshikak10/cicd-pipeline-project.git"
                 echo "Code checked out successfully"
             }
         }
@@ -27,9 +27,10 @@ pipeline {
              		  -e SONAR_HOST_URL=http://sonarqube:9000 \
               		  -e SONAR_TOKEN=sqa_dcb805a92508376a4362cdbdee78060eea78f681 \
               		  -v \$(pwd):/usr/src \
+                          -w /usr/src \
               		  sonarsource/sonar-scanner-cli:latest \
               		  -Dsonar.projectKey=todo-app \
-              		  -Dsonar.sources=/usr/src/app
+              		  -Dsonar.sources=app
                	    """
                 }
             }
@@ -82,7 +83,7 @@ pipeline {
                     sed -i '' "s|image:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|" k8s/deployment.yaml
                     kubectl apply -f k8s/deployment.yaml
                     kubectl apply -f k8s/service.yaml
-                    kubectl rollout status deployment/my-cicd-app --timeout=120s
+                    kubectl rollout status deployment/todo-app --timeout=120s
                 """
             }
         }
